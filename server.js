@@ -9,11 +9,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // تحديد مسار ملف Excel
-const filePath = path.resolve(__dirname, 'kashafa_abdulrahman_ben_qassim_registration.xlsx');
+const filePath = path.resolve(__dirname, 'kashafa_registration.xlsx');
 
 // دالة لإنشاء ملف Excel جديد
 function createExcelFile() {
-    const header = [['الاسم الثلاثي', 'رقم الهوية', 'الصف', 'الشعبة', 'رقم الجوال', 'الهويات', 'المهارات']];
+    const header = [['الاسم', 'رقم الهوية', 'الصف', 'الشعبة', 'رقم الجوال', 'الهوايات', 'المهارات']];
     const worksheet = XLSX.utils.aoa_to_sheet(header);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
@@ -28,19 +28,19 @@ if (!fs.existsSync(filePath)) {
 
 app.post('/register', (req, res) => {
     try {
-        const { fullName, idNumber, grade, classSection, phone, identities, skills } = req.body;
+        const { fullName, idNumber, grade, classSection, phone, hobbies, skills } = req.body;
 
         // قراءة ملف Excel
         const workbook = XLSX.readFile(filePath);
         const worksheet = workbook.Sheets[workbook.SheetNames[0]];
 
         const newData = {
-            'الاسم الثلاثي': fullName,
+            'الاسم': fullName,
             'رقم الهوية': idNumber,
             'الصف': grade,
             'الشعبة': classSection,
             'رقم الجوال': phone,
-            'الهويات': identities || '',
+            'الهوايات': hobbies || '',
             'المهارات': skills || ''
         };
 
