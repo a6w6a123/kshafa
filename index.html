@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل كشافة عبدالرحمن بن القاسم</title>
+</head>
+<body>
+    <section id="register" class="content-section">
+        <h2>التسجيل</h2>
+        <form action="/register" method="post">
+            <div class="form-group">
+                <label>الاسم الثلاثي (إجباري):</label>
+                <input type="text" name="fullName" required>
+            </div>
+            <div class="form-group">
+                <label>رقم الهوية (إجباري):</label>
+                <input type="text" name="idNumber" required>
+            </div>
+            <div class="form-group">
+                <label>الصف (إجباري):</label>
+                <input type="text" name="grade" required>
+            </div>
+            <div class="form-group">
+                <label>الشعبة (إجباري):</label>
+                <input type="text" name="classSection" required>
+            </div>
+            <div class="form-group">
+                <label>رقم الجوال (إجباري):</label>
+                <input type="text" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label>الهويات (اختياري):</label>
+                <input type="text" name="identities">
+            </div>
+            <div class="form-group">
+                <label>المهارات (اختياري):</label>
+                <input type="text" name="skills">
+            </div>
+            <button type="submit">تسجيل</button>
+        </form>
+    </section>
+</body>
+</html>
