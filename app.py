@@ -26,11 +26,12 @@ def search_by_id(id_number):
 # الصفحة الرئيسية
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    result = None
+    id_number = None
     if request.method == 'POST':
         id_number = request.form['id_number']
         result = search_by_id(id_number)
-        return render_template('result.html', result=result, id_number=id_number)
-    return render_template('index.html')
+    return render_template('index.html', result=result, id_number=id_number)
 
 # تشغيل التطبيق
 if __name__ == '__main__':
