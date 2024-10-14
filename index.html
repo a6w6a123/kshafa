@@ -7,22 +7,25 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0; /* إزالة الهوامش */
-            padding: 0; /* إزالة الحشو */
-            height: 100vh; /* ملء كامل ارتفاع النافذة */
-            overflow: hidden; /* منع ظهور أشرطة التمرير */
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            overflow: hidden;
         }
         #content {
-            height: 100%; /* ملء كامل ارتفاع الصفحة */
+            height: calc(100% - 80px); /* ملء كامل ارتفاع الصفحة */
         }
         iframe {
             width: 100%;
             height: 100%;
-            border: none; /* إزالة الحدود */
+            border: none;
         }
         input, button {
-            margin: 20px; /* إضافة بعض المسافة حول الإدخالات */
-            font-size: 16px; /* حجم الخط */
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .link-item {
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -31,13 +34,45 @@
     <input type="text" id="urlInput" placeholder="أدخل الرابط هنا">
     <button onclick="loadContent()">عرض المحتوى</button>
     
+    <h2>الرابط المدخل:</h2>
+    <div id="linksContainer"></div>
+
     <div id="content">
         <iframe id="iframe"></iframe>
     </div>
 
     <script>
+        // تحميل الروابط المحفوظة من localStorage عند تحميل الصفحة
+        window.onload = function() {
+            const savedLinks = JSON.parse(localStorage.getItem('links')) || [];
+            savedLinks.forEach(link => displayLink(link));
+        };
+
         function loadContent() {
             const url = document.getElementById('urlInput').value;
+            if (url) {
+                displayLink(url);
+                saveLink(url);
+                loadIframe(url);
+                document.getElementById('urlInput').value = ''; // تفريغ الحقل بعد الإدخال
+            }
+        }
+
+        function displayLink(link) {
+            const linksContainer = document.getElementById('linksContainer');
+            const linkItem = document.createElement('div');
+            linkItem.className = 'link-item';
+            linkItem.innerHTML = `<a href="#" onclick="loadIframe('${link}')">${link}</a>`;
+            linksContainer.appendChild(linkItem);
+        }
+
+        function saveLink(link) {
+            const savedLinks = JSON.parse(localStorage.getItem('links')) || [];
+            savedLinks.push(link);
+            localStorage.setItem('links', JSON.stringify(savedLinks));
+        }
+
+        function loadIframe(url) {
             const iframe = document.getElementById('iframe');
             iframe.src = url;
         }
