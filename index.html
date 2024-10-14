@@ -11,5 +11,19 @@
         <input type="text" name="id_number" id="id_number" required>
         <button type="submit">بحث</button>
     </form>
+
+    {% if id_number %}
+        <h2>نتائج البحث لرقم الهوية: {{ id_number }}</h2>
+        {% if result %}
+            <p>الاسم: {{ result['الاسم'] }}</p>
+            <p>رقم الجوال: {{ result['رقم الجوال'] }}</p>
+            <p>الصف: {{ result['الصف'] }}</p>
+            <p>الشعبة: {{ result['الشعبة'] }}</p>
+            <p>الهويات: {{ result['الهويات'] }}</p>
+            <p>المهارات: {{ result['المهارات'] }}</p>
+        {% else %}
+            <p>لم يتم العثور على بيانات للرقم الهوية {{ id_number }}</p>
+        {% endif %}
+    {% endif %}
 </body>
 </html>
