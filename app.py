@@ -5,8 +5,11 @@ import pandas as pd
 app = Flask(__name__)
 
 # تحميل بيانات ملف Excel
-file_path = 'kashafa_abdulrahman_ben_qassim_registration.xlsx'
+file_path = 'sample_student_data.xlsx'
 data = pd.read_excel(file_path)
+
+# تحويل "رقم الهوية" إلى نص للتوافق مع الإدخال
+data['رقم الهوية'] = data['رقم الهوية'].astype(str)
 
 # دالة البحث عن البيانات بناءً على رقم الهوية
 def search_by_id(id_number):
@@ -14,7 +17,7 @@ def search_by_id(id_number):
     if not result.empty:
         return {
             "الاسم": result['الاسم الثلاثي'].values[0],
-            "رقم الجوال": result['رقم الجوال'].values[0],
+            "رقم الجوال": result.get('رقم الجوال', 'غير متوفر'),
             "الصف": result['الصف'].values[0],
             "الشعبة": result['الشعبة'].values[0],
             "الهويات": result['الهويات'].values[0],
