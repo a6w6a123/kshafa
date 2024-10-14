@@ -2,26 +2,14 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل كشافة</title>
+    <title>البحث عن بيانات الطالب</title>
 </head>
 <body>
-    <form action="/register" method="post">
-        <label>الاسم الثلاثي:</label>
-        <input type="text" name="fullName" required><br>
-        <label>رقم الهوية:</label>
-        <input type="text" name="idNumber" required><br>
-        <label>الصف:</label>
-        <input type="text" name="grade" required><br>
-        <label>الشعبة:</label>
-        <input type="text" name="classSection" required><br>
-        <label>رقم الجوال:</label>
-        <input type="text" name="phone" required><br>
-        <label>الهوايات:</label>
-        <input type="text" name="hobbies"><br>
-        <label>المهارات:</label>
-        <input type="text" name="skills"><br>
-        <button type="submit">تسجيل</button>
+    <h1>البحث عن بيانات الطالب</h1>
+    <form method="post" action="/">
+        <label for="id_number">أدخل رقم الهوية:</label>
+        <input type="text" name="id_number" id="id_number" required>
+        <button type="submit">بحث</button>
     </form>
 </body>
 </html>
