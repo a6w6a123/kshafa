@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>نتائج البحث</title>
+</head>
+<body>
+    <h1>نتائج البحث</h1>
+    {% if result %}
+        <p>الاسم: {{ result['الاسم'] }}</p>
+        <p>رقم الجوال: {{ result['رقم الجوال'] }}</p>
+        <p>الصف: {{ result['الصف'] }}</p>
+        <p>الشعبة: {{ result['الشعبة'] }}</p>
+        <p>الهويات: {{ result['الهويات'] }}</p>
+        <p>المهارات: {{ result['المهارات'] }}</p>
+    {% else %}
+        <p>لم يتم العثور على بيانات للرقم الهوية {{ id_number }}</p>
+    {% endif %}
+    <a href="/">العودة للبحث مرة أخرى</a>
+</body>
+</html>
