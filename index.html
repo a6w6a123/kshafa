@@ -1,81 +1,728 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض محتوى الرابط</title>
+    <title>مسابقة رمضان الرمضانية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --ramadan-primary: #8B4513;  /* Warm brown */
+            --ramadan-secondary: #D2691E;  /* Dark orange */
+            --ramadan-light: #FFF8DC;  /* Cream */
+            --ramadan-gold: #DAA520;  /* Golden */
+            --ramadan-green: #2E8B57;  /* Sea green */
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
+            background: linear-gradient(135deg, var(--ramadan-light) 0%, #FFF5E6 100%);
+            font-family: 'Amiri', serif;
+            color: var(--ramadan-primary);
+            line-height: 1.7;
+        }
+
+        .ramadan-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 30px;
+            border: 3px solid var(--ramadan-gold);
+        }
+
+        .ramadan-header {
+            background: linear-gradient(to right, var(--ramadan-primary), var(--ramadan-secondary));
+            color: var(--ramadan-light);
+            text-align: center;
             padding: 20px;
-            height: 100vh;
-            overflow: hidden;
+            border-radius: 15px;
+            margin-bottom: 30px;
         }
-        #content {
-            height: calc(100% - 80px); /* ملء كامل ارتفاع الصفحة */
+
+        .competition-rules {
+            background-color: var(--ramadan-light);
+            border: 2px dashed var(--ramadan-secondary);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
         }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+
+        .competition-rules h3 {
+            color: var(--ramadan-primary);
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 2px solid var(--ramadan-gold);
+            padding-bottom: 10px;
         }
-        input, button {
-            margin: 10px 0;
-            font-size: 16px;
+
+        .competition-rules li {
+            position: relative;
+            padding-right: 30px;
+            margin-bottom: 10px;
         }
-        .link-item {
-            margin: 10px 0;
+
+        .competition-rules li::before {
+            content: '🕌';
+            position: absolute;
+            right: 0;
+            color: var(--ramadan-green);
+        }
+
+        .competition-item {
+            background-color: white;
+            border: 2px solid var(--ramadan-gold);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .competition-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .leaderboard-container {
+            background-color: var(--ramadan-light);
+            border: 2px solid var(--ramadan-secondary);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--ramadan-gold);
+            transition: background-color 0.3s ease;
+        }
+
+        .leaderboard-item:nth-child(1) { 
+            background-color: #FFF3CD;
+            font-weight: bold;
+        }
+
+        .leaderboard-item:nth-child(2) { 
+            background-color: #E2E3E5;
+            font-weight: bold;
+        }
+
+        .leaderboard-item:nth-child(3) { 
+            background-color: #D4EDDA;
+            font-weight: bold;
+        }
+
+        .modal-content {
+            background-color: var(--ramadan-light);
+            border: 3px solid var(--ramadan-gold);
+        }
+
+        @media (max-width: 768px) {
+            .ramadan-container {
+                padding: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>أدخل رابطًا</h1>
-    <input type="text" id="urlInput" placeholder="أدخل الرابط هنا">
-    <button onclick="loadContent()">عرض المحتوى</button>
-    
-    <h2>الرابط المدخل:</h2>
-    <div id="linksContainer"></div>
+    <div class="container ramadan-container">
+        <div class="ramadan-header">
+            <h1>مسابقة رمضان الرمضانية</h1>
+            <p>اختبر معلوماتك وتعلم في شهر الخير</p>
+        </div>
 
-    <div id="content">
-        <iframe id="iframe"></iframe>
+        <div id="registrationSection">
+            <h2>مسابقة رمضان اليومية</h2>
+            
+            <div class="competition-card">
+                <div class="card-header">
+                    <h4>تفاصيل المسابقة</h4>
+                </div>
+                <div class="competition-details">
+                    <p><strong>عنوان المسابقة:</strong> مسابقة رمضان اليومية</p>
+                    <p><strong>تاريخ البدء:</strong> 1 رمضان 1445 هـ</p>
+                    <p><strong>تاريخ الانتهاء:</strong> 15 رمضان 1445 هـ</p>
+                    <p><strong>مدة كل مسابقة:</strong> 15 دقيقة</p>
+                </div>
+            </div>
+
+            <form id="registrationForm">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="userName" placeholder="الاسم الكامل" required>
+                </div>
+                <div class="mb-3">
+                    <input type="tel" class="form-control" id="userPhone" placeholder="رقم الجوال" required pattern="[0-9]{10}">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">بدء المسابقة</button>
+            </form>
+
+            <div class="available-competitions mt-4">
+                <h4>المسابقات المتاحة</h4>
+                <div id="availableCompetitions"></div>
+            </div>
+
+            <div class="quiz-rules mt-4">
+                <h5>قواعد المسابقة:</h5>
+                <ul>
+                    <li>يمكنك اختيار يوم من أيام رمضان للمسابقة</li>
+                    <li>لديك 15 دقيقة للإجابة على 3 أسئلة</li>
+                    <li>كل سؤال يحتوي على خيارين: صحيح أو خطأ</li>
+                    <li>سيتم تسجيل درجاتك في نهاية المسابقة</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="quizSection">
+            <div class="competition-card">
+                <div class="card-header">
+                    <h4 id="competitionTitle"></h4>
+                    <div>
+                        <small>تاريخ البدء: <span id="startDate"></span></small>
+                        <br>
+                        <small>تاريخ الانتهاء: <span id="endDate"></span></small>
+                    </div>
+                </div>
+                <div class="timer">
+                    <span id="timer">11</span>
+                    <div class="timer-progress" id="timerProgress"></div>
+                </div>
+                <div class="question" id="questionText"></div>
+                <div class="answer-buttons">
+                    <button class="btn btn-true" id="trueButton">صحيح</button>
+                    <button class="btn btn-false" id="falseButton">خطأ</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultSection" class="container mt-5" style="display: none;">
+            <div class="card text-center">
+                <div class="card-header bg-primary text-white">
+                    <h3>نتيجة المسابقة</h3>
+                </div>
+                <div class="card-body">
+                    <h4 id="resultText" class="mb-4"></h4>
+                    <button id="homeButton" class="btn btn-primary btn-lg">
+                        العودة للرئيسية
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="leaderboard-container mt-5">
+            <h3 class="text-center mb-4">قائمة المتصدرين</h3>
+            <div id="leaderboard">
+                <!-- Leaderboard entries will be dynamically added here -->
+            </div>
+            <button id="exportButton" class="btn btn-primary mt-3 w-100">تصدير قاعدة البيانات</button>
+        </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
     <script>
-        // تحميل الروابط المحفوظة من localStorage عند تحميل الصفحة
-        window.onload = function() {
-            const savedLinks = JSON.parse(localStorage.getItem('links')) || [];
-            savedLinks.forEach(link => displayLink(link));
-        };
+        class RamadanQuiz {
+            constructor() {
+                this.questions = this.generateRamadanQuestions();
+                this.currentDay = null;
+                this.currentQuestionIndex = 0;
+                this.score = 0;
+                this.timer = null;
+                this.overallTimer = null;
 
-        function loadContent() {
-            const url = document.getElementById('urlInput').value;
-            if (url) {
-                displayLink(url);
-                saveLink(url);
-                loadIframe(url);
-                document.getElementById('urlInput').value = ''; // تفريغ الحقل بعد الإدخال
+                // Section references
+                this.registrationSection = document.getElementById('registrationSection');
+                this.quizSection = document.getElementById('quizSection');
+                this.resultSection = document.getElementById('resultSection');
+                this.availableCompetitions = document.getElementById('availableCompetitions');
+                this.leaderboard = document.getElementById('leaderboard');
+
+                // Element references
+                this.timerDisplay = document.getElementById('timer');
+                this.timerProgress = document.getElementById('timerProgress');
+                this.questionText = document.getElementById('questionText');
+                this.trueButton = document.getElementById('trueButton');
+                this.falseButton = document.getElementById('falseButton');
+                this.competitionTitle = document.getElementById('competitionTitle');
+                this.startDateDisplay = document.getElementById('startDate');
+                this.endDateDisplay = document.getElementById('endDate');
+                this.homeButton = document.getElementById('homeButton');
+                this.exportButton = document.getElementById('exportButton');
+
+                this.initEventListeners();
+                this.displayAvailableCompetitions();
+                this.updateLeaderboard();
+                this.initLeaderboardPersistence();
+                this.initExcelDatabase();
+            }
+
+            generateRamadanQuestions() {
+                const questions = {};
+                const startYear = 2024; // Adjust as needed
+                const startMonth = 3; // March (adjust based on Ramadan year)
+
+                for (let day = 1; day <= 30; day++) {
+                    const startDate = new Date(startYear, startMonth - 1, day);
+                    const endDate = new Date(startYear, startMonth - 1, day + 14); // 15-day competition window
+
+                    questions[day] = {
+                        title: `مسابقة رمضان - اليوم ${day}`,
+                        startDate: this.formatDate(startDate),
+                        endDate: this.formatDate(endDate),
+                        questions: [
+                            {
+                                text: `هل صيام يوم ${day} من رمضان فرض على كل مسلم؟`,
+                                correctAnswer: true
+                            },
+                            {
+                                text: `هل يجوز الإفطار في نهار يوم ${day} من رمضان؟`,
+                                correctAnswer: false
+                            },
+                            {
+                                text: `هل ليلة ${day} من رمضان من ليالي القدر؟`,
+                                correctAnswer: Math.random() < 0.5 // Randomly true or false
+                            }
+                        ]
+                    };
+                }
+                return questions;
+            }
+
+            formatDate(date) {
+                return date.toLocaleDateString('ar-EG', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+
+            generateAdvancedUniqueId() {
+                const username = document.getElementById('userName').value.trim();
+                const phone = document.getElementById('userPhone').value.trim();
+                
+                // Combine multiple unique identifiers
+                const baseFingerprint = this.getExtendedDeviceFingerprint();
+                const timeBasedSalt = this.generateTimeBasedSalt();
+                
+                // Create a complex, multi-layered hash
+                const complexId = this.hashString(
+                    `${username}-${phone}-${baseFingerprint}-${timeBasedSalt}`
+                );
+                
+                return complexId;
+            }
+
+            getExtendedDeviceFingerprint() {
+                // More comprehensive device fingerprinting
+                return this.hashString(
+                    navigator.userAgent + 
+                    navigator.language + 
+                    screen.width + 
+                    screen.height + 
+                    screen.colorDepth +
+                    (navigator.hardwareConcurrency || '') + 
+                    (navigator.platform || '') +
+                    (navigator.cookieEnabled ? '1' : '0') +
+                    this.getInstalledPlugins()
+                );
+            }
+
+            getInstalledPlugins() {
+                // Collect installed plugin names
+                return Array.from(navigator.plugins)
+                    .map(plugin => plugin.name)
+                    .join('|');
+            }
+
+            generateTimeBasedSalt() {
+                // Create a salt based on current date to prevent replay attacks
+                const now = new Date();
+                return this.hashString(
+                    `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`
+                );
+            }
+
+            hashString(str) {
+                // Simple hash function (for demonstration, consider using a more robust method)
+                let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    const char = str.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash; // Convert to 32-bit integer
+                }
+                return Math.abs(hash).toString(36);
+            }
+
+            hasUserAttemptedQuiz(day) {
+                const complexId = this.generateAdvancedUniqueId();
+                
+                // Multiple storage mechanisms for redundancy
+                const localStorageAttempts = this.checkLocalStorageAttempt(day, complexId);
+                const sessionStorageAttempts = this.checkSessionStorageAttempt(day, complexId);
+                const cookieAttempts = this.checkCookieAttempt(day, complexId);
+
+                return localStorageAttempts || sessionStorageAttempts || cookieAttempts;
+            }
+
+            checkLocalStorageAttempt(day, complexId) {
+                const quizAttempts = JSON.parse(localStorage.getItem('ramadanQuizAttempts') || '{}');
+                return quizAttempts[day] && quizAttempts[day].includes(complexId);
+            }
+
+            checkSessionStorageAttempt(day, complexId) {
+                const quizAttempts = JSON.parse(sessionStorage.getItem('ramadanQuizAttempts') || '{}');
+                return quizAttempts[day] && quizAttempts[day].includes(complexId);
+            }
+
+            checkCookieAttempt(day, complexId) {
+                const cookieName = `ramadan_quiz_attempt_${day}`;
+                return document.cookie.includes(`${cookieName}=${complexId}`);
+            }
+
+            recordQuizAttempt(day) {
+                const complexId = this.generateAdvancedUniqueId();
+                
+                // Record in localStorage
+                const localStorageAttempts = JSON.parse(localStorage.getItem('ramadanQuizAttempts') || '{}');
+                if (!localStorageAttempts[day]) {
+                    localStorageAttempts[day] = [];
+                }
+                localStorageAttempts[day].push(complexId);
+                localStorage.setItem('ramadanQuizAttempts', JSON.stringify(localStorageAttempts));
+
+                // Record in sessionStorage
+                const sessionStorageAttempts = JSON.parse(sessionStorage.getItem('ramadanQuizAttempts') || '{}');
+                if (!sessionStorageAttempts[day]) {
+                    sessionStorageAttempts[day] = [];
+                }
+                sessionStorageAttempts[day].push(complexId);
+                sessionStorage.setItem('ramadanQuizAttempts', JSON.stringify(sessionStorageAttempts));
+
+                // Record in cookies (expires in 24 hours)
+                const cookieName = `ramadan_quiz_attempt_${day}`;
+                const expirationDate = new Date();
+                expirationDate.setDate(expirationDate.getDate() + 1);
+                document.cookie = `${cookieName}=${complexId}; expires=${expirationDate.toUTCString()}; path=/; SameSite=Strict; Secure`;
+            }
+
+            displayAvailableCompetitions() {
+                this.availableCompetitions.innerHTML = '';
+                
+                for (let day in this.questions) {
+                    const competitionItem = document.createElement('div');
+                    competitionItem.classList.add('competition-item');
+                    
+                    const dayData = this.questions[day];
+                    const hasAttempted = this.hasUserAttemptedQuiz(day);
+
+                    competitionItem.innerHTML = `
+                        <h5>${dayData.title}</h5>
+                        <p>تاريخ البدء: ${dayData.startDate}</p>
+                        <p>تاريخ الانتهاء: ${dayData.endDate}</p>
+                        ${hasAttempted ? '<p class="competition-item-status text-danger">تمت المشاركة مسبقًا</p>' : ''}
+                    `;
+                    
+                    if (hasAttempted) {
+                        competitionItem.classList.add('disabled-competition');
+                    } else {
+                        competitionItem.addEventListener('click', () => this.startQuizForDay(day));
+                    }
+                    
+                    this.availableCompetitions.appendChild(competitionItem);
+                }
+            }
+
+            initEventListeners() {
+                // Registration form submission
+                document.getElementById('registrationForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.displayAvailableCompetitions();
+                });
+
+                // Day selection and answer buttons
+                this.trueButton.addEventListener('click', () => this.checkAnswer(true));
+                this.falseButton.addEventListener('click', () => this.checkAnswer(false));
+                
+                // Home button to return to main competitions view
+                this.homeButton.addEventListener('click', () => {
+                    this.resultSection.style.display = 'none';
+                    this.registrationSection.style.display = 'block';
+                    this.displayAvailableCompetitions();
+                });
+
+                this.exportButton.addEventListener('click', () => this.exportExcelDatabase());
+            }
+
+            startQuizForDay(day) {
+                this.currentDay = day;
+                this.currentQuestionIndex = 0;
+                this.score = 0;
+                this.registrationSection.style.display = 'none';
+                this.quizSection.style.display = 'block';
+
+                // Set competition details
+                const dayData = this.questions[day];
+                this.competitionTitle.textContent = dayData.title;
+                this.startDateDisplay.textContent = dayData.startDate;
+                this.endDateDisplay.textContent = dayData.endDate;
+
+                this.loadQuestion();
+                this.startOverallTimer();
+            }
+
+            startOverallTimer() {
+                let timeLeft = 900; // 15 minutes = 900 seconds
+                this.overallTimer = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft <= 0) {
+                        clearInterval(this.overallTimer);
+                        this.showResult();
+                    }
+                }, 1000);
+            }
+
+            loadQuestion() {
+                if (this.currentQuestionIndex >= 3) {
+                    this.showResult();
+                    return;
+                }
+
+                const question = this.questions[this.currentDay].questions[this.currentQuestionIndex];
+                this.questionText.textContent = question.text;
+                this.startQuestionTimer();
+            }
+
+            startQuestionTimer() {
+                let timeLeft = 11;
+                this.timerDisplay.textContent = timeLeft;
+                this.timerProgress.style.width = '100%';
+
+                clearInterval(this.timer);
+                this.timer = setInterval(() => {
+                    timeLeft--;
+                    this.timerDisplay.textContent = timeLeft;
+                    this.timerProgress.style.width = `${(timeLeft / 11) * 100}%`;
+
+                    if (timeLeft <= 0) {
+                        clearInterval(this.timer);
+                        this.nextQuestion();
+                    }
+                }, 1000);
+            }
+
+            checkAnswer(selectedAnswer) {
+                clearInterval(this.timer);
+                const currentQuestion = this.questions[this.currentDay].questions[this.currentQuestionIndex];
+                
+                if (selectedAnswer === currentQuestion.correctAnswer) {
+                    this.score++;
+                }
+
+                this.nextQuestion();
+            }
+
+            nextQuestion() {
+                this.currentQuestionIndex++;
+                this.loadQuestion();
+            }
+
+            showResult() {
+                clearInterval(this.timer);
+                clearInterval(this.overallTimer);
+                this.quizSection.style.display = 'none';
+                this.resultSection.style.display = 'block';
+                
+                // Record the quiz attempt
+                this.recordQuizAttempt(this.currentDay);
+
+                const username = document.getElementById('userName').value.trim();
+                const phone = document.getElementById('userPhone').value.trim();
+
+                const leaderboardData = JSON.parse(localStorage.getItem('ramadanQuizLeaderboard') || '[]');
+                leaderboardData.push({ name: username, phone: phone, score: this.score });
+                leaderboardData.sort((a, b) => b.score - a.score);
+                localStorage.setItem('ramadanQuizLeaderboard', JSON.stringify(leaderboardData));
+
+                this.updateLeaderboard();
+
+                document.getElementById('resultText').textContent = 
+                    `لقد أجبت على ${this.score} من 3 أسئلة بشكل صحيح`;
+            }
+
+            updateLeaderboard() {
+                // Retrieve leaderboard data with fallback
+                let leaderboardData = [];
+                try {
+                    leaderboardData = JSON.parse(localStorage.getItem('ramadanQuizLeaderboard') || '[]');
+                } catch (error) {
+                    console.error('Error parsing leaderboard:', error);
+                    leaderboardData = [];
+                }
+
+                // Sort and limit to top 10
+                leaderboardData.sort((a, b) => b.score - a.score);
+                leaderboardData = leaderboardData.slice(0, 10);
+
+                // Clear existing leaderboard
+                this.leaderboard.innerHTML = '';
+
+                // Check if leaderboard is empty
+                if (leaderboardData.length === 0) {
+                    this.leaderboard.innerHTML = `
+                        <div class="alert alert-info text-center" role="alert">
+                            لا توجد نتائج حتى الآن. كن أول المشاركين!
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Populate leaderboard
+                leaderboardData.forEach((entry, index) => {
+                    const leaderboardItem = document.createElement('div');
+                    leaderboardItem.classList.add('leaderboard-item');
+                    
+                    // Ensure name and phone are present and sanitized
+                    const sanitizedName = this.sanitizeInput(entry.name || 'مشارك');
+                    const sanitizedScore = Math.min(Math.max(entry.score || 0, 0), 3);
+                    
+                    leaderboardItem.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-primary me-2">${index + 1}</span>
+                            <span>${sanitizedName}</span>
+                        </div>
+                        <div>
+                            <span class="badge bg-success">النتيجة: ${sanitizedScore}/3</span>
+                        </div>
+                    `;
+                    this.leaderboard.appendChild(leaderboardItem);
+                });
+
+                // Sync with sessionStorage
+                sessionStorage.setItem('ramadanQuizLeaderboard', JSON.stringify(leaderboardData));
+            }
+
+            // Sanitize user input to prevent XSS
+            sanitizeInput(input) {
+                const div = document.createElement('div');
+                div.textContent = input;
+                return div.innerHTML;
+            }
+
+            initLeaderboardPersistence() {
+                // Use multiple storage mechanisms for redundancy
+                if (!localStorage.getItem('ramadanQuizLeaderboard')) {
+                    localStorage.setItem('ramadanQuizLeaderboard', JSON.stringify([]));
+                }
+
+                // Sync with sessionStorage
+                if (!sessionStorage.getItem('ramadanQuizLeaderboard')) {
+                    sessionStorage.setItem('ramadanQuizLeaderboard', localStorage.getItem('ramadanQuizLeaderboard'));
+                }
+            }
+
+            initExcelDatabase() {
+                // Create Excel workbook if not exists
+                if (!localStorage.getItem('ramadan_quiz_workbook')) {
+                    const wb = XLSX.utils.book_new();
+                    const ws_data = [
+                        ['الاسم', 'رقم الجوال', 'اليوم', 'النتيجة', 'التاريخ']
+                    ];
+                    const ws = XLSX.utils.aoa_to_sheet(ws_data);
+                    XLSX.utils.book_append_sheet(wb, ws, 'المشاركون');
+                    
+                    // Save workbook to localStorage
+                    localStorage.setItem('ramadan_quiz_workbook', 
+                        XLSX.write(wb, {type: 'base64'}));
+                }
+            }
+
+            recordParticipantToExcel(name, phone, day, score) {
+                // Retrieve existing workbook
+                const wb_base64 = localStorage.getItem('ramadan_quiz_workbook');
+                const wb = XLSX.read(wb_base64, {type: 'base64'});
+                
+                // Get worksheet
+                const ws_name = 'المشاركون';
+                const ws = wb.Sheets[ws_name];
+                
+                // Convert to array
+                const ws_data = XLSX.utils.sheet_to_json(ws, {header: 1});
+                
+                // Add new participant
+                ws_data.push([
+                    name, 
+                    phone, 
+                    day, 
+                    score, 
+                    new Date().toLocaleDateString('ar-EG')
+                ]);
+                
+                // Convert back to worksheet
+                const new_ws = XLSX.utils.aoa_to_sheet(ws_data);
+                wb.Sheets[ws_name] = new_ws;
+                
+                // Save updated workbook
+                localStorage.setItem('ramadan_quiz_workbook', 
+                    XLSX.write(wb, {type: 'base64'}));
+            }
+
+            exportExcelDatabase() {
+                const wb_base64 = localStorage.getItem('ramadan_quiz_workbook');
+                const wb = XLSX.read(wb_base64, {type: 'base64'});
+                
+                // Export file
+                XLSX.writeFile(wb, 'مشاركو_مسابقة_رمضان.xlsx');
+            }
+
+            showResult() {
+                // Previous showResult logic
+                const participantName = document.getElementById('userName').value.trim();
+                const participantPhone = document.getElementById('userPhone').value.trim();
+
+                // Record to Excel database
+                this.recordParticipantToExcel(
+                    participantName, 
+                    participantPhone, 
+                    this.currentDay, 
+                    this.score
+                );
+
+                // Rest of the previous showResult method
+                clearInterval(this.timer);
+                clearInterval(this.overallTimer);
+                this.quizSection.style.display = 'none';
+                this.resultSection.style.display = 'block';
+                
+                // Record the quiz attempt
+                this.recordQuizAttempt(this.currentDay);
+
+                const username = document.getElementById('userName').value.trim();
+                const phone = document.getElementById('userPhone').value.trim();
+
+                const leaderboardData = JSON.parse(localStorage.getItem('ramadanQuizLeaderboard') || '[]');
+                leaderboardData.push({ name: username, phone: phone, score: this.score });
+                leaderboardData.sort((a, b) => b.score - a.score);
+                localStorage.setItem('ramadanQuizLeaderboard', JSON.stringify(leaderboardData));
+
+                this.updateLeaderboard();
+
+                document.getElementById('resultText').textContent = 
+                    `لقد أجبت على ${this.score} من 3 أسئلة بشكل صحيح`;
             }
         }
 
-        function displayLink(link) {
-            const linksContainer = document.getElementById('linksContainer');
-            const linkItem = document.createElement('div');
-            linkItem.className = 'link-item';
-            linkItem.innerHTML = `<a href="#" onclick="loadIframe('${link}')">${link}</a>`;
-            linksContainer.appendChild(linkItem);
-        }
+        // Ensure compatibility across devices and browsers
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fallback for older browsers
+            if (!window.localStorage) {
+                alert('المتصفح غير مدعوم. الرجاء تحديث المتصفح.');
+                return;
+            }
 
-        function saveLink(link) {
-            const savedLinks = JSON.parse(localStorage.getItem('links')) || [];
-            savedLinks.push(link);
-            localStorage.setItem('links', JSON.stringify(savedLinks));
-        }
-
-        function loadIframe(url) {
-            const iframe = document.getElementById('iframe');
-            iframe.src = url;
-        }
+            new RamadanQuiz();
+        });
     </script>
 </body>
 </html>
